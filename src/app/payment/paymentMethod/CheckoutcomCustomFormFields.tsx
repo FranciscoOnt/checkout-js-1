@@ -1,5 +1,5 @@
 import { PaymentMethod } from '@bigcommerce/checkout-sdk';
-import React, { useContext, useEffect, FunctionComponent } from 'react';
+import React, { useContext, useEffect, Fragment, FunctionComponent } from 'react';
 
 import { CheckoutContext } from '../../checkout';
 import { TranslatedString } from '../../locale';
@@ -7,11 +7,11 @@ import { CheckboxFormField } from '../../ui/form';
 import { TextFieldForm } from '../creditCard';
 import PaymentContext from '../PaymentContext';
 
-interface CheckoutcomSepaFormProps {
+interface CheckoutcomAPMFormProps {
     method: PaymentMethod;
 }
 
-const Sepa: FunctionComponent<CheckoutcomSepaFormProps> = ({method}) => {
+const Sepa: FunctionComponent<CheckoutcomAPMFormProps> = ({method}) => {
     const checkoutContext = useContext(CheckoutContext);
     const paymentContext = useContext(PaymentContext);
     const config = checkoutContext?.checkoutState.data.getConfig();
@@ -49,7 +49,27 @@ const Sepa: FunctionComponent<CheckoutcomSepaFormProps> = ({method}) => {
     </>);
 };
 
+const Fawry: FunctionComponent<CheckoutcomAPMFormProps> = () => {
+    return (
+        <Fragment>
+            <TextFieldForm
+                additionalClassName="form-field--customerMobile"
+                autoComplete="customerMobile"
+                labelId="payment.checkoutcom_fawry_customer_mobile_label"
+                name="customerMobile"
+            />
+            <TextFieldForm
+                additionalClassName="form-field--customerEmail"
+                autoComplete="customerEmail"
+                labelId="payment.checkoutcom_fawry_customer_email_label"
+                name="customerEmail"
+            />
+        </Fragment>
+    );
+};
+
 const checkoutcomCustomFormFields = {
+    fawry: Fawry,
     sepa: Sepa,
 };
 
